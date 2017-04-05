@@ -1,0 +1,10 @@
+^dist.ini
+^MANIFEST.SKIP
+^Rex-Flink.*
+^\.gitignore
+^\.git
+^\.build
+^tmp
+^storage
+^vars.db.*
+^Rexfile.lock

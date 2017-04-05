@@ -1,0 +1,5 @@
+--perl-best-practices
+--continuation-indentation=2
+--no-standard-output
+--no-standard-error-output
+--no-blanks-before-comments

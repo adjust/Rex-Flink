@@ -1,0 +1,14 @@
+.perlcriticrc
+.perltidyrc
+Changes
+LICENSE
+MANIFEST
+META.json
+Makefile.PL
+README.pod
+cpanfile
+lib/Rex/Flink.pm
+weaver.ini
+xt/author/00-compile.t
+xt/author/critic.t
+xt/author/pod-syntax.t
