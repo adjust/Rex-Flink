@@ -52,7 +52,7 @@ task 'stop' => sub {
 
 __END__
 
-=for :stopwords CMDB CPAN Flink hadoop Hadoop scala YAML
+=for :stopwords CMDB CPAN Flink hadoop Hadoop libvirt scala VM YAML
 
 =head1 SYNOPSIS
 
@@ -127,3 +127,13 @@ There are no known incompatibilities with other modules.
 =head1 BUGS AND LIMITATIONS
 
 There are no known bugs. Make sure they are reported.
+
+=head1 TESTING
+
+This module is capable to do testing with the help of the C<Rex::Test> module inside a VM via libvirt.
+
+A URL pointing to a VM image to be used for the testing should be specified via the C<REX_FLINK_TEST_IMAGE> environment variable. For example:
+
+ # CLI
+ $ REX_FLINK_TEST_IMAGE='file:///var/lib/livirt/image.qcow2' rex Test:run
+ $ REX_FLINK_TEST_IMAGE='https://domain.tld/image.qcow2' rex Test:run

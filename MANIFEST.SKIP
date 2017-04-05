@@ -7,4 +7,6 @@
 ^tmp
 ^storage
 ^vars.db.*
+^Rexfile
 ^Rexfile.lock
+^t
