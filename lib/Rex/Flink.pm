@@ -20,6 +20,7 @@ my $flink = get cmdb 'flink';
 $install_path = $flink->{install_path} // '~/flink';
 $flink_dir = "$install_path/current";
 
+desc 'Setup Flink from tarball';
 task 'setup' => sub {
     my $params = shift;
 
@@ -40,10 +41,12 @@ task 'setup' => sub {
     symlink "$install_path/flink-${version}", $flink_dir;
 };
 
+desc 'Start Flink in local mode';
 task 'start' => sub {
     run 'bin/start-local.sh', cwd => $flink_dir;
 };
 
+desc 'Stop Flink in local mode';
 task 'stop' => sub {
     run 'bin/stop-local.sh', cwd => $flink_dir;
 };
@@ -89,11 +92,11 @@ Flink version (default: C<1.2.0>)
 
 =task start
 
-Starts Flink.
+Starts Flink in local mode.
 
 =task stop
 
-Stops Flink.
+Stops Flink in local mode.
 
 =head1 DIAGNOSTICS
 
