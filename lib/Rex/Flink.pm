@@ -79,13 +79,13 @@ Supported options:
 
 =begin :list
 
-= hadoop
+= --hadoop
 Hadoop version (default: C<27>)
 
-= scala
+= --scala
 Scala version (default: C<2.11>)
 
-= version
+= --version
 Flink version (default: C<1.2.0>)
 
 =end :list
