@@ -31,6 +31,11 @@ $t->has_dir('~/flink');
 $t->has_dir('~/flink/flink-1.2.0');
 $t->has_dir('~/flink/current');
 
+# configure tests
+run_task 'Flink:configure', on => $host;
+
+$t->has_file('~/flink/current/conf/flink-conf.yaml');
+
 # run tests
 $t->ok( ( none { $_->{command} =~ /java.*flink.*JobManager/ } ps() ),
     'Flink is not running' );
