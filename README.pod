@@ -2,7 +2,7 @@
 
 =encoding UTF-8
 
-=for :stopwords Ferenc Erki adjust GmbH
+=for :stopwords Ferenc Erki adjust GmbH CMDB CPAN Flink hadoop Hadoop libvirt scala VM YAML
 
 =head1 NAME
 
@@ -14,17 +14,49 @@ version v0.1.0
 
 =head1 SYNOPSIS
 
+    # Rexfile
     use Rex::Flink;
+
+    # CLI
+    $ rex Flink:setup
+    $ rex Flink:start
+    $ rex Flink:stop
 
 =head1 DESCRIPTION
 
-=head1 SUBROUTINES
-
-=head2
+This module automates Flink tasks with Rex.
 
 =head1 TASKS
 
-=head2
+=head2 setup
+
+Sets Flink up from binary tarball.
+
+Supported options:
+
+=over 4
+
+=item hadoop
+
+Hadoop version (default: C<27>)
+
+=item scala
+
+Scala version (default: C<2.11>)
+
+=item version
+
+Flink version (default: C<1.2.0>)
+
+=back
+
+=head2 start
+
+Starts Flink.
+
+=head2 stop
+
+Stops Flink.
 
 =head1 DIAGNOSTICS
 
@@ -32,7 +64,15 @@ This module does not do any error checking (yet).
 
 =head1 CONFIGURATION AND ENVIRONMENT
 
-This module does not require any configuration, nor does it use any environment variables.
+This module can use configuration specified under the C<flink> node in the CMDB. Example YAML structure:
+
+ flink:
+     hadoop: 27
+     install_path: ~/flink
+     scala: 2.11
+     version: 1.2.0
+
+This module does not use any environment variables.
 
 =head1 DEPENDENCIES
 
@@ -55,6 +95,16 @@ There are no known incompatibilities with other modules.
 =head1 BUGS AND LIMITATIONS
 
 There are no known bugs. Make sure they are reported.
+
+=head1 TESTING
+
+This module is capable to do testing with the help of the C<Rex::Test> module inside a VM via libvirt.
+
+A URL pointing to a VM image to be used for the testing should be specified via the C<REX_FLINK_TEST_IMAGE> environment variable. For example:
+
+ # CLI
+ $ REX_FLINK_TEST_IMAGE='file:///var/lib/livirt/image.qcow2' rex Test:run
+ $ REX_FLINK_TEST_IMAGE='https://domain.tld/image.qcow2' rex Test:run
 
 =head1 AUTHOR
 

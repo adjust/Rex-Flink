@@ -1,12 +1,13 @@
 Revision history for Rex-Flink
- 
+
 {{$NEXT}}
- - Initial release
-
  [API CHANGES]
-
- [ENHANCEMENTS]
 
  [BUG FIXES]
 
  [DOCUMENTATION]
+
+ [ENHANCEMENTS]
+
+v0.1.0 2017-04-06T14:05:07Z
+ - Initial release

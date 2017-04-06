@@ -6,6 +6,7 @@ MANIFEST
 META.json
 Makefile.PL
 README.pod
+cmdb/default.yml
 cpanfile
 lib/Rex/Flink.pm
 weaver.ini

@@ -1,4 +1,6 @@
 requires "Rex" => "0";
+requires "Rex::CMDB" => "0";
+requires "Rex::Shared::Var" => "0";
 requires "strict" => "0";
 requires "warnings" => "0";
 

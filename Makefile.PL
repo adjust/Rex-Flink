@@ -17,6 +17,8 @@ my %WriteMakefileArgs = (
   "NAME" => "Rex::Flink",
   "PREREQ_PM" => {
     "Rex" => 0,
+    "Rex::CMDB" => 0,
+    "Rex::Shared::Var" => 0,
     "strict" => 0,
     "warnings" => 0
   },
@@ -29,6 +31,8 @@ my %WriteMakefileArgs = (
 
 my %FallbackPrereqs = (
   "Rex" => 0,
+  "Rex::CMDB" => 0,
+  "Rex::Shared::Var" => 0,
   "strict" => 0,
   "warnings" => 0
 );
