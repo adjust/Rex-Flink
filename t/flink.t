@@ -22,6 +22,7 @@ $t->name('flink-test');
 $t->base_vm($vm_image);
 $t->vm_auth( user => $user, );
 
+# install tests
 $t->run_task('Flink:setup');
 my $host = connection->server;
 
@@ -30,6 +31,7 @@ $t->has_dir('~/flink');
 $t->has_dir('~/flink/flink-1.2.0');
 $t->has_dir('~/flink/current');
 
+# run tests
 $t->ok( ( none { $_->{command} =~ /java.*flink.*JobManager/ } ps() ),
     'Flink is not running' );
 
