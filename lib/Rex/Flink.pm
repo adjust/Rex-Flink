@@ -16,6 +16,8 @@ use File::ShareDir 'dist_dir';
 use Rex -base;
 use Rex::CMDB;
 
+my $dist_share_dir = dist_dir('Rex-Flink');
+
 if ( !-d 'cmdb' ) {    # if there is no local CMDB
     my $cmdb_path;
     if ( -d 'share/cmdb' ) {
@@ -23,11 +25,14 @@ if ( !-d 'cmdb' ) {    # if there is no local CMDB
     }
     else {
         # use the installed CMDB otherwise
-        $cmdb_path = dist_dir('Rex-Flink') . '/cmdb';
+        $cmdb_path = "$dist_share_dir/cmdb";
     }
 
     set cmdb => { type => 'YAML', path => $cmdb_path };
 }
+
+set path_map => { 'templates/' =>
+      [ 'templates/', "$dist_share_dir/templates", 'share/templates' ], };
 
 my $flink = get cmdb 'flink';
 
@@ -53,6 +58,14 @@ task 'setup' => sub {
     extract $tmp_file, to => $install_path;
 
     symlink "$install_path/flink-${version}", $flink_dir;
+
+    needs 'configure';
+};
+
+desc 'Configure Flink from a template file';
+task 'configure' => sub {
+    file "$flink_dir/conf/flink-conf.yaml",
+      content => template( $flink->{config_file} );
 };
 
 desc 'Start Flink in local mode';
@@ -103,6 +116,10 @@ Scala version (default: C<2.11>)
 Flink version (default: C<1.2.0>)
 
 =end :list
+
+=task configure
+
+Configures Flink from a file, which is treated as a standard Rex template. The name of the file to be deployed can be controlled from CMDB via C<config_path>. Default is C<templates/flink-conf.yaml>.
 
 =task start
 

@@ -10,6 +10,7 @@ Revision history for Rex-Flink
  - Document install_path
 
  [ENHANCEMENTS]
+ - Add basic configure task
 
 v0.1.0 2017-04-06T14:05:07Z
  - Initial release

@@ -1,4 +1,5 @@
 flink:
+  config_file: templates/flink-conf.yaml
   hadoop: 27
   install_path: '~/flink'
   scala: 2.11
