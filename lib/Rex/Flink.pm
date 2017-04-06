@@ -73,7 +73,7 @@ This module automates Flink tasks with Rex.
 
 =task setup
 
-Sets Flink up from binary tarball.
+Sets Flink up from binary tarball. The installation directory can be controlled from CMDB via C<install_path>. Default is C<~/flink>.
 
 Supported options:
 
