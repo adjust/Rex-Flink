@@ -1,3 +1,4 @@
+requires "File::ShareDir" => "0";
 requires "Rex" => "0";
 requires "Rex::CMDB" => "0";
 requires "Rex::Shared::Var" => "0";
@@ -6,6 +7,7 @@ requires "warnings" => "0";
 
 on 'configure' => sub {
   requires "ExtUtils::MakeMaker" => "0";
+  requires "File::ShareDir::Install" => "0.06";
 };
 
 on 'develop' => sub {

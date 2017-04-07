@@ -10,7 +10,7 @@ Rex::Flink - automate Flink tasks with Rex
 
 =head1 VERSION
 
-version v0.1.0
+version v0.2.0
 
 =head1 SYNOPSIS
 
@@ -30,33 +30,37 @@ This module automates Flink tasks with Rex.
 
 =head2 setup
 
-Sets Flink up from binary tarball.
+Sets Flink up from binary tarball. The installation directory can be controlled from CMDB via C<install_path>. Default is C<~/flink>.
 
 Supported options:
 
 =over 4
 
-=item hadoop
+=item --hadoop
 
 Hadoop version (default: C<27>)
 
-=item scala
+=item --scala
 
 Scala version (default: C<2.11>)
 
-=item version
+=item --version
 
 Flink version (default: C<1.2.0>)
 
 =back
 
+=head2 configure
+
+Configures Flink from a file, which is treated as a standard Rex template. The name of the file to be deployed can be controlled from CMDB via C<config_path>. Default is C<templates/flink-conf.yaml>.
+
 =head2 start
 
-Starts Flink.
+Starts Flink in local mode.
 
 =head2 stop
 
-Stops Flink.
+Stops Flink in local mode.
 
 =head1 DIAGNOSTICS
 

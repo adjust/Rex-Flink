@@ -4,6 +4,13 @@ Revision history for Rex-Flink
  [API CHANGES]
 
  [BUG FIXES]
+
+ [DOCUMENTATION]
+
+ [ENHANCEMENTS]
+
+v0.2.0 2017-04-07T15:27:58Z
+ [BUG FIXES]
  - Use share directory for sample CMDB
 
  [DOCUMENTATION]

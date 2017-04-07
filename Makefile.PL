@@ -6,23 +6,31 @@ use warnings;
 
 use ExtUtils::MakeMaker;
 
+use File::ShareDir::Install;
+$File::ShareDir::Install::INCLUDE_DOTFILES = 1;
+$File::ShareDir::Install::INCLUDE_DOTDIRS = 1;
+install_share dist => "share";
+
+
 my %WriteMakefileArgs = (
   "ABSTRACT" => "automate Flink tasks with Rex",
   "AUTHOR" => "Ferenc Erki <ferki\@adjust.com>",
   "CONFIGURE_REQUIRES" => {
-    "ExtUtils::MakeMaker" => 0
+    "ExtUtils::MakeMaker" => 0,
+    "File::ShareDir::Install" => "0.06"
   },
   "DISTNAME" => "Rex-Flink",
   "LICENSE" => "perl",
   "NAME" => "Rex::Flink",
   "PREREQ_PM" => {
+    "File::ShareDir" => 0,
     "Rex" => 0,
     "Rex::CMDB" => 0,
     "Rex::Shared::Var" => 0,
     "strict" => 0,
     "warnings" => 0
   },
-  "VERSION" => "v0.1.0",
+  "VERSION" => "v0.2.0",
   "test" => {
     "TESTS" => ""
   }
@@ -30,6 +38,7 @@ my %WriteMakefileArgs = (
 
 
 my %FallbackPrereqs = (
+  "File::ShareDir" => 0,
   "Rex" => 0,
   "Rex::CMDB" => 0,
   "Rex::Shared::Var" => 0,
@@ -48,3 +57,9 @@ delete $WriteMakefileArgs{CONFIGURE_REQUIRES}
   unless eval { ExtUtils::MakeMaker->VERSION(6.52) };
 
 WriteMakefile(%WriteMakefileArgs);
+
+{
+package
+MY;
+use File::ShareDir::Install qw(postamble);
+}
