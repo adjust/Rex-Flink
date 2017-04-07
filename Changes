@@ -4,6 +4,7 @@ Revision history for Rex-Flink
  [API CHANGES]
 
  [BUG FIXES]
+ - Use share directory for sample CMDB
 
  [DOCUMENTATION]
  - Document install_path

@@ -12,8 +12,22 @@ BEGIN {
 
 our $VERSION = '9999';
 
+use File::ShareDir 'dist_dir';
 use Rex -base;
 use Rex::CMDB;
+
+if ( !-d 'cmdb' ) {    # if there is no local CMDB
+    my $cmdb_path;
+    if ( -d 'share/cmdb' ) {
+        $cmdb_path = 'share/cmdb';    # use the CMDB under share if exists
+    }
+    else {
+        # use the installed CMDB otherwise
+        $cmdb_path = dist_dir('Rex-Flink') . '/cmdb';
+    }
+
+    set cmdb => { type => 'YAML', path => $cmdb_path };
+}
 
 my $flink = get cmdb 'flink';
 
