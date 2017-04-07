@@ -12,7 +12,7 @@ BEGIN {
 
 our $VERSION = '9999';
 
-use Rex -feature => [qw(1.4 exec_autodie)];
+use Rex -base;
 use Rex::CMDB;
 
 my $flink = get cmdb 'flink';
