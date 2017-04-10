@@ -15,6 +15,7 @@ Revision history for Rex-Flink
  [MAJOR]
 
  [MINOR]
+ - Move common code into a separate module
 
  [NEW FEATURES]
 

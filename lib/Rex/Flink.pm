@@ -5,47 +5,21 @@ package Rex::Flink;
 use strict;
 use warnings;
 
-BEGIN {
-    use Rex::Shared::Var;
-    share qw($flink_dir $install_path);
-}
-
 our $VERSION = '9999';
 
-use File::ShareDir 'dist_dir';
 use Rex -base;
 use Rex::CMDB;
+use Rex::Flink::Common;
 
-my $dist_share_dir = dist_dir('Rex-Flink');
-
-if ( !-d 'cmdb' ) {    # if there is no local CMDB
-    my $cmdb_path;
-    if ( -d 'share/cmdb' ) {
-        $cmdb_path = 'share/cmdb';    # use the CMDB under share if exists
-    }
-    else {
-        # use the installed CMDB otherwise
-        $cmdb_path = "$dist_share_dir/cmdb";
-    }
-
-    set cmdb => { type => 'YAML', path => $cmdb_path };
-}
-
-set path_map => { 'templates/' =>
-      [ 'templates/', "$dist_share_dir/templates", 'share/templates' ], };
-
-my $flink = get cmdb 'flink';
-
-$install_path = $flink->{install_path} // '~/flink';
-$flink_dir = "$install_path/current";
+my $flink = get 'flink';
 
 desc 'Setup Flink from tarball';
 task 'setup' => sub {
     my $params = shift;
 
-    my $version = $params->{version} // $flink->{version} // '1.2.0';
-    my $hadoop  = $params->{hadoop}  // $flink->{hadoop}  // '27';
-    my $scala   = $params->{scala}   // $flink->{scala}   // '2.11';
+    my $version = $params->{version} // $flink->{cmdb}->{version} // '1.2.0';
+    my $hadoop  = $params->{hadoop}  // $flink->{cmdb}->{hadoop}  // '27';
+    my $scala   = $params->{scala}   // $flink->{cmdb}->{scala}   // '2.11';
 
     my $filename = "flink-${version}-bin-hadoop${hadoop}-scala_${scala}.tgz";
     my $url
@@ -55,27 +29,27 @@ task 'setup' => sub {
     my $tmp_file = "$tmp_dir/$filename";
 
     run "curl --location $url --output $tmp_file", creates => $tmp_file;
-    extract $tmp_file, to => $install_path;
+    extract $tmp_file, to => $flink->{install_path};
 
-    symlink "$install_path/flink-${version}", $flink_dir;
+    symlink "$flink->{install_path}/flink-${version}", $flink->{flink_dir};
 
     needs 'configure';
 };
 
 desc 'Configure Flink from a template file';
 task 'configure' => sub {
-    file "$flink_dir/conf/flink-conf.yaml",
-      content => template( $flink->{config_file} );
+    file "$flink->{flink_dir}/conf/flink-conf.yaml",
+      content => template( $flink->{cmdb}->{config_file} );
 };
 
 desc 'Start Flink in local mode';
 task 'start' => sub {
-    run 'bin/start-local.sh', cwd => $flink_dir;
+    run 'bin/start-local.sh', cwd => $flink->{flink_dir};
 };
 
 desc 'Stop Flink in local mode';
 task 'stop' => sub {
-    run 'bin/stop-local.sh', cwd => $flink_dir;
+    run 'bin/stop-local.sh', cwd => $flink->{flink_dir};
 };
 
 1;
