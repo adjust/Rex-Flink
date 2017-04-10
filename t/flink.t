@@ -54,4 +54,33 @@ run_task 'Flink:stop', on => $host;
 $t->ok( ( none { $_->{command} =~ /java.*flink.*JobManager/ } ps() ),
     'Flink has stopped' );
 
+# pipeline tests
+my $tmp_dir;
+LOCAL { $tmp_dir = Rex::Config::get_tmp_dir() };
+my $pipeline_file = 'WordCount.jar';
+
+download "/root/flink/current/examples/batch/$pipeline_file", "$tmp_dir/";
+run_task 'Flink:Pipeline:upload',
+  on     => $host,
+  params => { file => "$tmp_dir/$pipeline_file" };
+
+$t->has_dir('~/flink/current/pipelines');
+$t->has_file('~/flink/current/pipelines/WordCount.jar');
+
+run_task 'Flink:start', on => $host;
+
+unlink("$tmp_dir/wordcount.out");
+
+run_task 'Flink:Pipeline:run',
+  on     => $host,
+  params => {
+    file => '~/flink/current/pipelines/WordCount.jar',
+    options =>
+      "--input ~/flink/current/LICENSE --output $tmp_dir/wordcount.out"
+  };
+
+$t->has_file("$tmp_dir/wordcount.out");
+
+run_task 'Flink:stop', on => $host;
+
 $t->finish;
