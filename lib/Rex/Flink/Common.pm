@@ -32,12 +32,16 @@ set path_map => { 'templates/' =>
 my $flink = get cmdb 'flink';
 
 my $install_path = $flink->{install_path} // '~/flink';
-my $flink_dir = "$install_path/current";
+my $flink_dir    = "$install_path/current";
+my $flink_bin    = "$flink_dir/bin/flink";
+my $pipeline_dir = "$flink_dir/pipelines";
 
 set flink => {
     cmdb         => $flink,
     install_path => $install_path,
     flink_dir    => $flink_dir,
+    flink_bin    => $flink_bin,
+    pipeline_dir => $pipeline_dir,
 };
 
 1;

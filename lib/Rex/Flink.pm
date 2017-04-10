@@ -10,6 +10,7 @@ our $VERSION = '9999';
 use Rex -base;
 use Rex::CMDB;
 use Rex::Flink::Common;
+use Rex::Flink::Pipeline;
 
 my $flink = get 'flink';
 
@@ -105,9 +106,47 @@ Starts Flink in local mode.
 
 Stops Flink in local mode.
 
+=task Flink:Pipeline:upload
+
+Uploads a compiled pipeline to the remote machine from the local one. By default it uploads into C<~/flink/current/pipelines>.
+
+Supported options:
+
+=begin :list
+
+= --file
+Local filename of the pipeline to upload.
+
+=end :list
+
+=task Flink:Pipeline:run
+
+Runs a pipeline on the remote machine.
+
+Supported options:
+
+=begin :list
+
+= --file
+Remote filename of the pipeline to run. Mandatory, without any default value.
+
+= --class
+Class with the pipeline entry point.
+
+= --parallelism
+Parallelism for the pipeline.
+
+= --options
+Any extra options to be passed to the pipeline.
+
+=end :list
+
 =head1 DIAGNOSTICS
 
-This module does not do any error checking (yet).
+=for :list
+* C<No pipeline file specified>
+
+No pipeline file is specified to run with C<Flink:Pipeline:run> task.
 
 =head1 CONFIGURATION AND ENVIRONMENT
 
