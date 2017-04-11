@@ -98,7 +98,9 @@ __END__
 
 This module automates Flink tasks with Rex.
 
-=task setup
+B<Please note this is a work still heavily in progress, the interface might be subject to change before version 1.0.0.>
+
+=task Flink:setup
 
 Sets Flink up from binary tarball. The installation directory can be controlled from CMDB via C<install_path>. Default is C<~/flink>.
 
@@ -117,15 +119,15 @@ Flink version (default: C<1.2.0>)
 
 =end :list
 
-=task configure
+=task Flink:configure
 
-Configures Flink from a file, which is treated as a standard Rex template. The name of the file to be deployed can be controlled from CMDB via C<config_path>. Default is C<templates/flink-conf.yaml>.
+Configures Flink from a file, which is treated as a standard Rex template. The name of the file to be deployed can be controlled from CMDB via C<config_file>. Default is C<templates/flink-conf.yaml>.
 
-=task start
+=task Flink:start
 
 Starts Flink in local mode.
 
-=task stop
+=task Flink:stop
 
 Stops Flink in local mode.
 
@@ -138,12 +140,13 @@ This module does not do any error checking (yet).
 This module can use configuration specified under the C<flink> node in the CMDB. Example YAML structure:
 
  flink:
+     config_file: templates/flink-conf.yaml
      hadoop: 27
      install_path: ~/flink
      scala: 2.11
      version: 1.2.0
 
-This module does not use any environment variables.
+This module does not use any environment variables. See also L<TESTING>.
 
 =head1 DEPENDENCIES
 
@@ -169,5 +172,5 @@ This module is capable to do testing with the help of the C<Rex::Test> module in
 A URL pointing to a VM image to be used for the testing should be specified via the C<REX_FLINK_TEST_IMAGE> environment variable. For example:
 
  # CLI
- $ REX_FLINK_TEST_IMAGE='file:///var/lib/livirt/image.qcow2' rex Test:run
+ $ REX_FLINK_TEST_IMAGE='file:///var/lib/livirt/images/image.qcow2' rex Test:run
  $ REX_FLINK_TEST_IMAGE='https://domain.tld/image.qcow2' rex Test:run
