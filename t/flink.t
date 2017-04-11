@@ -5,6 +5,7 @@ use warnings;
 
 use List::Util qw(any none);
 
+use Const::Fast;
 use Rex -base;
 use Rex::Test::Base;
 use Rex::Commands::Virtualization;
@@ -18,9 +19,12 @@ my $t = Rex::Test::Base->new;
 my $vm_image = $ENV{REX_FLINK_TEST_IMAGE};
 my $user     = Rex::Config::get_user();
 
+const my $RAM => 1024;
+
 $t->name('flink-test');
 $t->base_vm($vm_image);
 $t->vm_auth( user => $user, );
+$t->memory($RAM);
 
 # install tests
 $t->run_task('Flink:setup');

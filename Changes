@@ -4,6 +4,7 @@ Revision history for Rex-Flink
  [API CHANGES]
 
  [BUG FIXES]
+ - Increase RAM for test VM
 
  [DOCUMENTATION]
  - Warn about WIP status
