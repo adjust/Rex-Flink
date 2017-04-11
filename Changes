@@ -4,23 +4,32 @@ Revision history for Rex-Flink
  [API CHANGES]
 
  [BUG FIXES]
- - Increase RAM for test VM
 
  [DOCUMENTATION]
- - Warn about WIP status
- - General fixes
 
  [ENHANCEMENTS]
 
  [MAJOR]
 
  [MINOR]
+
+ [NEW FEATURES]
+
+ [REVISION]
+
+v0.3.0 2017-04-11T12:58:39Z
+ [BUG FIXES]
+ - Increase RAM for test VM
+
+ [DOCUMENTATION]
+ - Warn about WIP status
+ - General fixes
+
+ [MINOR]
  - Move common code into a separate module
 
  [NEW FEATURES]
  - Initial support for pipeline management
-
- [REVISION]
 
 v0.2.0 2017-04-07T15:27:58Z
  [BUG FIXES]

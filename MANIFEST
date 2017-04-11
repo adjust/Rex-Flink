@@ -8,6 +8,8 @@ Makefile.PL
 README.pod
 cpanfile
 lib/Rex/Flink.pm
+lib/Rex/Flink/Common.pm
+lib/Rex/Flink/Pipeline.pm
 share/cmdb/default.yml
 share/templates/flink-conf.yaml
 weaver.ini
