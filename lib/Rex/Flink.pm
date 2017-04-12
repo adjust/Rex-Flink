@@ -24,7 +24,7 @@ task 'setup' => sub {
 
     my $filename = "flink-${version}-bin-hadoop${hadoop}-scala_${scala}.tgz";
     my $url
-      = "http://mirror.serversupportforum.de/apache/flink/flink-${version}/$filename";
+      = "http://archive.apache.org/dist/flink/flink-${version}/$filename";
 
     my $tmp_dir  = Rex::Config::get_tmp_dir();
     my $tmp_file = "$tmp_dir/$filename";
