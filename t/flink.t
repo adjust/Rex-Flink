@@ -47,17 +47,40 @@ sub is_running {
     return any { $_->{command} =~ /$regex/ } ps();
 }
 
-my $jobmanager = qr{java.*flink.*JobManager};
+my $job_manager       = qr{java.*flink.*JobManager};
+my $job_manager_local = qr{java.*flink.*JobManager.*--executionMode local};
+my $job_manager_cluster
+  = qr{java.*flink.*JobManager.*--executionMode cluster};
 
-$t->ok( !is_running($jobmanager), 'Flink is not running' );
+$t->ok( !is_running($job_manager), 'JobManager is not running' );
 
+# local mode
 run_task 'Flink:start', on => $host;
 
-$t->ok( is_running(qr{$jobmanager}), 'Flink has started' );
+$t->ok( is_running($job_manager_local),
+    'JobManager has started in local mode' );
 
 run_task 'Flink:stop', on => $host;
 
-$t->ok( !is_running(qr{$jobmanager}), 'Flink has stopped' );
+$t->ok( !is_running($job_manager_local),
+    'JobManager has stopped in local mode' );
+
+# cluster mode
+run_task 'Flink:start',
+  on     => $host,
+  params => { mode => 'cluster' };
+
+$t->ok(
+    is_running($job_manager_cluster),
+    'JobManager has started in cluster mode'
+);
+
+run_task 'Flink:stop', on => $host;
+
+$t->ok(
+    !is_running($job_manager_cluster),
+    'JobManager has stopped in cluster mode'
+);
 
 # pipeline tests
 my $tmp_dir;
@@ -72,7 +95,9 @@ run_task 'Flink:Pipeline:upload',
 $t->has_dir('~/flink/current/pipelines');
 $t->has_file('~/flink/current/pipelines/WordCount.jar');
 
-run_task 'Flink:start', on => $host;
+run_task 'Flink:start',
+  on     => $host,
+  params => { mode => 'local' };
 
 unlink("$tmp_dir/wordcount.out");
 
