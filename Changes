@@ -8,7 +8,6 @@ Revision history for Rex-Flink
  [DOCUMENTATION]
 
  [ENHANCEMENTS]
- - Support individual Flink services
 
  [MAJOR]
 
@@ -17,6 +16,10 @@ Revision history for Rex-Flink
  [NEW FEATURES]
 
  [REVISION]
+
+v0.4.0 2017-04-12T12:51:31Z
+ [ENHANCEMENTS]
+ - Support individual Flink services
 
 v0.3.0 2017-04-11T12:58:39Z
  [BUG FIXES]

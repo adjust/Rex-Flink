@@ -10,7 +10,7 @@ Rex::Flink - automate Flink tasks with Rex
 
 =head1 VERSION
 
-version v0.3.0
+version v0.4.0
 
 =head1 SYNOPSIS
 
@@ -58,11 +58,35 @@ Configures Flink from a file, which is treated as a standard Rex template. The n
 
 =head2 Flink:start
 
-Starts Flink in local mode.
+Starts a Flink service.
+
+Supported options:
+
+=over 4
+
+=item --service
+
+Service name to start (default: C<jobmanager>)
+
+=item --mode
+
+Execution mode to start the service with (default: C<local>)
+
+=back
 
 =head2 Flink:stop
 
-Stops Flink in local mode.
+Stops a Flink service.
+
+Supported options:
+
+=over 4
+
+=item --service
+
+Service name to stop (default: C<jobmanager>)
+
+=back
 
 =head2 Flink:Pipeline:upload
 
