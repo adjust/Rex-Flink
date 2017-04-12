@@ -41,18 +41,23 @@ run_task 'Flink:configure', on => $host;
 $t->has_file('~/flink/current/conf/flink-conf.yaml');
 
 # run tests
-$t->ok( ( none { $_->{command} =~ /java.*flink.*JobManager/ } ps() ),
-    'Flink is not running' );
+sub is_running {
+    my $regex = shift;
+
+    return any { $_->{command} =~ /$regex/ } ps();
+}
+
+my $jobmanager = qr{java.*flink.*JobManager};
+
+$t->ok( !is_running($jobmanager), 'Flink is not running' );
 
 run_task 'Flink:start', on => $host;
 
-$t->ok( ( any { $_->{command} =~ /java.*flink.*JobManager/ } ps() ),
-    'Flink has started' );
+$t->ok( is_running(qr{$jobmanager}), 'Flink has started' );
 
 run_task 'Flink:stop', on => $host;
 
-$t->ok( ( none { $_->{command} =~ /java.*flink.*JobManager/ } ps() ),
-    'Flink has stopped' );
+$t->ok( !is_running(qr{$jobmanager}), 'Flink has stopped' );
 
 # pipeline tests
 my $tmp_dir;
