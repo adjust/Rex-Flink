@@ -51,8 +51,10 @@ my $job_manager       = qr{java.*flink.*JobManager};
 my $job_manager_local = qr{java.*flink.*JobManager.*--executionMode local};
 my $job_manager_cluster
   = qr{java.*flink.*JobManager.*--executionMode cluster};
+my $task_manager = qr{java.*flink.*TaskManager};
 
-$t->ok( !is_running($job_manager), 'JobManager is not running' );
+$t->ok( !is_running($job_manager),  'JobManager is not running' );
+$t->ok( !is_running($task_manager), 'TaskManager is not running' );
 
 # local mode
 run_task 'Flink:start', on => $host;
@@ -82,6 +84,19 @@ $t->ok(
     'JobManager has stopped in cluster mode'
 );
 
+# TaskManager
+run_task 'Flink:start',
+  on     => $host,
+  params => { service => 'taskmanager' };
+
+$t->ok( is_running($task_manager), 'TaskManager has started' );
+
+run_task 'Flink:stop',
+  on     => $host,
+  params => { service => 'taskmanager' };
+
+$t->ok( !is_running($task_manager), 'TaskManager has stopped' );
+
 # pipeline tests
 my $tmp_dir;
 LOCAL { $tmp_dir = Rex::Config::get_tmp_dir() };
@@ -97,7 +112,7 @@ $t->has_file('~/flink/current/pipelines/WordCount.jar');
 
 run_task 'Flink:start',
   on     => $host,
-  params => { mode => 'local' };
+  params => { service => 'jobmanager', mode => 'local' };
 
 unlink("$tmp_dir/wordcount.out");
 
@@ -111,6 +126,8 @@ run_task 'Flink:Pipeline:run',
 
 $t->has_file("$tmp_dir/wordcount.out");
 
-run_task 'Flink:stop', on => $host;
+run_task 'Flink:stop',
+  on     => $host,
+  params => { service => 'jobmanager' };
 
 $t->finish;
