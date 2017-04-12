@@ -45,12 +45,27 @@ task 'configure' => sub {
 
 desc 'Start Flink in local mode';
 task 'start' => sub {
-    run 'bin/start-local.sh', cwd => $flink->{flink_dir};
+    my $params  = shift;
+    my $service = $params->{service} // 'jobmanager';
+    my $mode    = $params->{mode} // 'local';
+
+    my $command = "bin/$service.sh start";
+    if ( $service eq 'jobmanager' ) {
+        $command .= " $mode";
+    }
+
+    run $command, cwd => $flink->{flink_dir};
 };
 
 desc 'Stop Flink in local mode';
 task 'stop' => sub {
-    run 'bin/stop-local.sh', cwd => $flink->{flink_dir};
+    my $params = shift;
+    my $service = $params->{service} // 'jobmanager';
+
+    my $command = "bin/$service.sh stop";
+
+    run $command, cwd => $flink->{flink_dir};
+    sleep 1;
 };
 
 1;
@@ -100,11 +115,32 @@ Configures Flink from a file, which is treated as a standard Rex template. The n
 
 =task Flink:start
 
-Starts Flink in local mode.
+Starts a Flink service.
+
+Supported options:
+
+=begin :list
+
+= --service
+Service name to start (default: C<jobmanager>)
+
+= --mode
+Execution mode to start the service with (default: C<local>)
+
+=end :list
 
 =task Flink:stop
 
-Stops Flink in local mode.
+Stops a Flink service.
+
+Supported options:
+
+=begin :list
+
+= --service
+Service name to stop (default: C<jobmanager>)
+
+=end :list
 
 =task Flink:Pipeline:upload
 
