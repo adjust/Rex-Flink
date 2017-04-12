@@ -7,12 +7,16 @@ use warnings;
 
 our $VERSION = '9999';
 
+use Carp;
+use Const::Fast;
 use Rex -base;
 use Rex::CMDB;
+use Rex::Commands::MD5;
 use Rex::Flink::Common;
 use Rex::Flink::Pipeline;
 
 my $flink = get 'flink';
+const my $SPACE => q{ };
 
 desc 'Setup Flink from tarball';
 task 'setup' => sub {
@@ -28,8 +32,21 @@ task 'setup' => sub {
 
     my $tmp_dir  = Rex::Config::get_tmp_dir();
     my $tmp_file = "$tmp_dir/$filename";
+    my $md5_file = "$tmp_file.md5";
 
-    run "curl --location $url --output $tmp_file", creates => $tmp_file;
+    run "curl --location $url --output $tmp_file",     creates => $tmp_file;
+    run "curl --location $url.md5 --output $md5_file", creates => $md5_file;
+
+    my $md5 = md5($tmp_file);
+    my ($expected) = ( split $SPACE, cat $md5_file );
+    my $verified = $md5 eq $expected;
+
+    if ( !$verified ) {
+        mv $tmp_file, "$tmp_file.bad";
+        mv $md5_file, "$md5_file.bad";
+        croak "MD5 checksum mismatch for $tmp_file";
+    }
+
     extract $tmp_file, to => $flink->{install_path};
 
     symlink "$flink->{install_path}/flink-${version}", $flink->{flink_dir};
@@ -204,6 +221,7 @@ This module depends on the modules detailed below.
 CPAN modules:
 
 =for :list
+* Const::Fast
 * Rex
 
 =head1 INCOMPATIBILITIES

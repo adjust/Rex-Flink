@@ -9,6 +9,7 @@ Revision history for Rex-Flink
  [DOCUMENTATION]
 
  [ENHANCEMENTS]
+ - Verify MD5 checksum of downloaded tarball
 
  [MAJOR]
 
