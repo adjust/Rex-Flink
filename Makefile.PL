@@ -24,14 +24,16 @@ my %WriteMakefileArgs = (
   "NAME" => "Rex::Flink",
   "PREREQ_PM" => {
     "Carp" => 0,
+    "Const::Fast" => 0,
     "File::ShareDir" => 0,
     "Rex" => 0,
     "Rex::CMDB" => 0,
+    "Rex::Commands::MD5" => 0,
     "Rex::Commands::Upload" => 0,
     "strict" => 0,
     "warnings" => 0
   },
-  "VERSION" => "v0.4.0",
+  "VERSION" => "v0.5.0",
   "test" => {
     "TESTS" => ""
   }
@@ -40,9 +42,11 @@ my %WriteMakefileArgs = (
 
 my %FallbackPrereqs = (
   "Carp" => 0,
+  "Const::Fast" => 0,
   "File::ShareDir" => 0,
   "Rex" => 0,
   "Rex::CMDB" => 0,
+  "Rex::Commands::MD5" => 0,
   "Rex::Commands::Upload" => 0,
   "strict" => 0,
   "warnings" => 0
